@@ -1,0 +1,6 @@
+target("pystr")
+    set_kind("binary")
+    add_includedirs("include/", "libs/")
+    set_languages("c++17")
+    set_symbols("debug")
+    add_files("test/*.cpp")
