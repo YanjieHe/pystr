@@ -8,7 +8,7 @@ using std::string;
 
 TEST_CASE("split", "[pystr::split]") {
   pprint::PrettyPrinter printer;
-  auto res = pystr::split<char>("a::b::c", "::", 1);
+  auto res = pystr::split<char>("a\r\nb \n\n", "");
   printer.print("size = ", res.size(), "values = ", res);
   REQUIRE(pystr::split<char>("a, b, c", ", ") == vector<string>{"a", "b", "c"});
   REQUIRE(pystr::split<char>("", "/", 1) == vector<string>{""});
@@ -27,4 +27,5 @@ TEST_CASE("split", "[pystr::split]") {
           vector<string>{"", "root", "world"});
   REQUIRE(pystr::split<char>("/root/world", "/", -1) ==
           vector<string>{"", "root", "world"});
+  REQUIRE(pystr::split<char>("a\r\nb \n\n", "") == vector<string>{"a", "b"});
 }
