@@ -5,6 +5,7 @@
 
 using std::vector;
 using std::string;
+using std::make_tuple;
 
 TEST_CASE("split strings from left to right", "[pystr::split]") {
   REQUIRE(pystr::split<char>("a, b, c", ", ") == vector<string>{"a", "b", "c"});
@@ -58,7 +59,7 @@ TEST_CASE("split strings from right to left", "[pystr::rsplit]") {
           vector<string>{"", "root", "world"});
 }
 
-TEST_CASE("strip", "[pystr::split]") {
+TEST_CASE("strip", "[pystr::strip]") {
   REQUIRE(pystr::strip<char>("") == "");
   REQUIRE(pystr::strip<char>("a") == "a");
   REQUIRE(pystr::strip<char>("a ") == "a");
@@ -66,4 +67,16 @@ TEST_CASE("strip", "[pystr::split]") {
   REQUIRE(pystr::strip<char>("\n a ") == "a");
   REQUIRE(pystr::strip<char>("\r\n a \r\n") == "a");
   REQUIRE(pystr::strip<char>("\r\n a \r\n\t") == "a");
+}
+
+TEST_CASE("partition", "[pystr::partition]") {
+  REQUIRE(pystr::partition<char>("aaabbbcccbbbddd", "bbb") ==
+          make_tuple("aaa", "bbb", "cccbbbddd"));
+}
+
+TEST_CASE("rpartition", "[pystr::rpartition]") {
+  pprint::PrettyPrinter printer;
+  printer.print(pystr::rpartition<char>("aaabbbcccbbbddd", "bbb"));
+  REQUIRE(pystr::partition<char>("aaabbbcccbbbddd", "bbb") ==
+          make_tuple("aaa", "bbb", "cccbbbddd"));
 }

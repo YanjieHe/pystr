@@ -5,11 +5,14 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <tuple>
 
 namespace pystr {
 
 using std::vector;
 using std::basic_string;
+using std::tuple;
+using std::make_tuple;
 
 template <class CharType>
 inline vector<basic_string<CharType>>
@@ -131,8 +134,9 @@ rsplit(const basic_string<CharType> &s, const basic_string<CharType> &separator,
 }
 
 template <class CharType>
-inline basic_string<CharType> strip(const basic_string<CharType> &s,
-                                    const basic_string<CharType> &chars = basic_string<CharType>()) {
+inline basic_string<CharType>
+strip(const basic_string<CharType> &s,
+      const basic_string<CharType> &chars = basic_string<CharType>()) {
   if (chars.empty()) {
     auto start = std::find_if_not(s.begin(), s.end(), isspace);
     auto end = std::find_if_not(s.rbegin(), s.rend(), isspace);
@@ -147,6 +151,68 @@ inline basic_string<CharType> strip(const basic_string<CharType> &s,
     });
     return s.substr(start - s.begin(),
                     (s.size() - (end - s.rbegin())) - (start - s.begin()));
+  }
+}
+
+template <class CharType>
+inline basic_string<CharType>
+lstrip(const basic_string<CharType> &s,
+       const basic_string<CharType> &chars = basic_string<CharType>()) {
+  if (chars.empty()) {
+    auto start = std::find_if_not(s.begin(), s.end(), isspace);
+    return s.substr(start - s.begin(), s.end());
+  } else {
+    auto start = std::find_if_not(s.begin(), s.end(), [&chars](CharType c) {
+      return chars.find(c) != chars.npos;
+    });
+    return s.substr(start - s.begin(), s.end());
+  }
+}
+
+template <class CharType>
+inline basic_string<CharType>
+rstrip(const basic_string<CharType> &s,
+       const basic_string<CharType> &chars = basic_string<CharType>()) {
+  if (chars.empty()) {
+    auto end = std::find_if_not(s.rbegin(), s.rend(), isspace);
+    return s.substr(s.begin(),
+                    (s.size() - (end - s.rbegin())) - (start - s.begin()));
+  } else {
+    auto end = std::find_if_not(s.rbegin(), s.rend(), [&chars](CharType c) {
+      return chars.find(c) != chars.npos;
+    });
+    return s.substr(s.begin(),
+                    (s.size() - (end - s.rbegin())) - (start - s.begin()));
+  }
+}
+
+template <class CharType>
+inline tuple<basic_string<CharType>, basic_string<CharType>,
+             basic_string<CharType>>
+partition(const basic_string<CharType> &s,
+          const basic_string<CharType> &separator) {
+  auto index = s.find(separator);
+  if (index == s.npos) {
+    return make_tuple(s, basic_string<CharType>(), basic_string<CharType>());
+  } else {
+    return make_tuple(s.substr(0, index), separator,
+                      s.substr(index + separator.size(),
+                               s.size() - (index + separator.size())));
+  }
+}
+
+template <class CharType>
+inline tuple<basic_string<CharType>, basic_string<CharType>,
+             basic_string<CharType>>
+rpartition(const basic_string<CharType> &s,
+           const basic_string<CharType> &separator) {
+  auto index = s.rfind(separator);
+  if (index == s.npos) {
+    return make_tuple(basic_string<CharType>(), basic_string<CharType>(), s);
+  } else {
+    return make_tuple(s.substr(0, s.size() - (index - separator.size())),
+                      separator,
+                      s.substr(index + separator.size(), s.size() - index));
   }
 }
 
