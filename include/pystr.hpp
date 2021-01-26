@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <numeric>
-#include <execution>
 
 namespace pystr {
 
@@ -129,6 +127,26 @@ rsplit(const basic_string<CharType> &s, const basic_string<CharType> &separator,
     result.push_back(s.substr(0, p1 + 1));
     std::reverse(result.begin(), result.end());
     return result;
+  }
+}
+
+template <class CharType>
+inline basic_string<CharType> strip(const basic_string<CharType> &s,
+                                    const basic_string<CharType> &chars = basic_string<CharType>()) {
+  if (chars.empty()) {
+    auto start = std::find_if_not(s.begin(), s.end(), isspace);
+    auto end = std::find_if_not(s.rbegin(), s.rend(), isspace);
+    return s.substr(start - s.begin(),
+                    (s.size() - (end - s.rbegin())) - (start - s.begin()));
+  } else {
+    auto start = std::find_if_not(s.begin(), s.end(), [&chars](CharType c) {
+      return chars.find(c) != chars.npos;
+    });
+    auto end = std::find_if_not(s.rbegin(), s.rend(), [&chars](CharType c) {
+      return chars.find(c) != chars.npos;
+    });
+    return s.substr(start - s.begin(),
+                    (s.size() - (end - s.rbegin())) - (start - s.begin()));
   }
 }
 

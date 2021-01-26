@@ -57,3 +57,13 @@ TEST_CASE("split strings from right to left", "[pystr::rsplit]") {
   REQUIRE(pystr::rsplit<char>(" root world", " ", 2) ==
           vector<string>{"", "root", "world"});
 }
+
+TEST_CASE("strip", "[pystr::split]") {
+  REQUIRE(pystr::strip<char>("") == "");
+  REQUIRE(pystr::strip<char>("a") == "a");
+  REQUIRE(pystr::strip<char>("a ") == "a");
+  REQUIRE(pystr::strip<char>(" a") == "a");
+  REQUIRE(pystr::strip<char>("\n a ") == "a");
+  REQUIRE(pystr::strip<char>("\r\n a \r\n") == "a");
+  REQUIRE(pystr::strip<char>("\r\n a \r\n\t") == "a");
+}
