@@ -348,33 +348,27 @@ template <class CharType> inline void capitalize(basic_string<CharType> &s) {
   }
 }
 
-template <class CharType> inline bool isalnum(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool isalnum(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::isalnum);
 }
 
-template <class CharType> inline bool isalpha(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool isalpha(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::isalpha);
 }
 
-template <class CharType> inline bool isdigit(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool isdigit(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::isdigit);
 }
 
-template <class CharType> inline bool islower(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool islower(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::islower);
 }
 
-template <class CharType> inline bool isupper(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool isupper(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::isupper);
 }
 
-template <class CharType> inline bool isspace(const basic_string<CharType>
-&s) {
+template <class CharType> inline bool isspace(const basic_string<CharType> &s) {
   return std::all_of(s.begin(), s.end(), std::isspace);
 }
 
