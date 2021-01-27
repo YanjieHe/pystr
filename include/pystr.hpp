@@ -14,6 +14,25 @@ using std::basic_string;
 using std::tuple;
 using std::make_tuple;
 
+namespace internal {
+inline void adjust_slice(int &start, int &end, int length) {
+  if (end > length) {
+    end = length;
+  } else if (end < 0) {
+    end = end + length;
+    if (end < 0) {
+      end = 0;
+    }
+  }
+  if (start < 0) {
+    start = start + length;
+    if (start < 0) {
+      start = 0;
+    }
+  }
+}
+}; // namespace internal
+
 template <class CharType>
 inline vector<basic_string<CharType>>
 split_whitespace(const basic_string<CharType> &s, int max_split = -1) {
@@ -21,7 +40,8 @@ split_whitespace(const basic_string<CharType> &s, int max_split = -1) {
   int n_splits = 0;
   basic_string<CharType>::const_iterator start = s.begin();
   basic_string<CharType>::const_iterator end;
-  start = std::find_if_not(s.begin(), s.end(), isspace);
+  start = std::find_if_not(s.begin(), s.end(),
+                           [](CharType c) { return std::isspace(c); });
   while (start != s.end()) {
     if (max_split != -1) {
       if (n_splits >= max_split) {
@@ -31,9 +51,11 @@ split_whitespace(const basic_string<CharType> &s, int max_split = -1) {
         n_splits++;
       }
     }
-    end = std::find_if(start, s.end(), isspace);
+    end = std::find_if(start, s.end(),
+                       [](CharType c) { return std::isspace(c); });
     result.push_back(s.substr(start - s.begin(), end - start));
-    start = std::find_if_not(end, s.end(), isspace);
+    start = std::find_if_not(end, s.end(),
+                             [](CharType c) { return std::isspace(c); });
   }
   return result;
 }
@@ -45,7 +67,8 @@ rsplit_whitespace(const basic_string<CharType> &s, int max_split = -1) {
   int n_splits = 0;
   basic_string<CharType>::const_reverse_iterator start = s.rbegin();
   basic_string<CharType>::const_reverse_iterator end;
-  start = std::find_if_not(s.rbegin(), s.rend(), isspace);
+  start = std::find_if_not(s.rbegin(), s.rend(),
+                           [](CharType c) { return std::isspace(c); });
   while (start != s.rend()) {
     if (max_split != -1) {
       if (n_splits >= max_split) {
@@ -56,9 +79,11 @@ rsplit_whitespace(const basic_string<CharType> &s, int max_split = -1) {
         n_splits++;
       }
     }
-    end = std::find_if(start, s.rend(), isspace);
+    end = std::find_if(start, s.rend(),
+                       [](CharType c) { return std::isspace(c); });
     result.push_back(s.substr(s.size() - (end - s.rbegin()), end - start));
-    start = std::find_if_not(end, s.rend(), isspace);
+    start = std::find_if_not(end, s.rend(),
+                             [](CharType c) { return std::isspace(c); });
   }
   std::reverse(result.begin(), result.end());
   return result;
@@ -138,8 +163,10 @@ inline basic_string<CharType>
 strip(const basic_string<CharType> &s,
       const basic_string<CharType> &chars = basic_string<CharType>()) {
   if (chars.empty()) {
-    auto start = std::find_if_not(s.begin(), s.end(), isspace);
-    auto end = std::find_if_not(s.rbegin(), s.rend(), isspace);
+    auto start = std::find_if_not(s.begin(), s.end(),
+                                  [](CharType c) { return std::isspace(c); });
+    auto end = std::find_if_not(s.rbegin(), s.rend(),
+                                [](CharType c) { return std::isspace(c); });
     return s.substr(start - s.begin(),
                     (s.size() - (end - s.rbegin())) - (start - s.begin()));
   } else {
@@ -159,7 +186,7 @@ inline basic_string<CharType>
 lstrip(const basic_string<CharType> &s,
        const basic_string<CharType> &chars = basic_string<CharType>()) {
   if (chars.empty()) {
-    auto start = std::find_if_not(s.begin(), s.end(), isspace);
+    auto start = std::find_if_not(s.begin(), s.end(), std::isspace);
     return s.substr(start - s.begin(), s.end());
   } else {
     auto start = std::find_if_not(s.begin(), s.end(), [&chars](CharType c) {
@@ -174,7 +201,7 @@ inline basic_string<CharType>
 rstrip(const basic_string<CharType> &s,
        const basic_string<CharType> &chars = basic_string<CharType>()) {
   if (chars.empty()) {
-    auto end = std::find_if_not(s.rbegin(), s.rend(), isspace);
+    auto end = std::find_if_not(s.rbegin(), s.rend(), std::isspace);
     return s.substr(s.begin(),
                     (s.size() - (end - s.rbegin())) - (start - s.begin()));
   } else {
@@ -304,6 +331,71 @@ inline bool endswith(const basic_string<CharType> &s,
     }
   }
   return true;
+}
+
+template <class CharType> inline void capitalize(basic_string<CharType> &s) {
+  if (s.empty()) {
+    return;
+  } else {
+    if (std::islower(s[0])) {
+      s[0] = std::toupper(s[0]);
+    }
+    for (size_t i = 1; i < s.size(); i++) {
+      if (std::isupper(s[i])) {
+        s[i] = std::tolower(s[i]);
+      }
+    }
+  }
+}
+
+template <class CharType> inline bool isalnum(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::isalnum);
+}
+
+template <class CharType> inline bool isalpha(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::isalpha);
+}
+
+template <class CharType> inline bool isdigit(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::isdigit);
+}
+
+template <class CharType> inline bool islower(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::islower);
+}
+
+template <class CharType> inline bool isupper(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::isupper);
+}
+
+template <class CharType> inline bool isspace(const basic_string<CharType>
+&s) {
+  return std::all_of(s.begin(), s.end(), std::isspace);
+}
+
+template <class CharType> inline void lower(basic_string<CharType> &s) {
+  std::transform(s.begin(), send(), s.begin(), std::tolower);
+}
+
+template <class CharType> inline void upper(basic_string<CharType> &s) {
+  std::transform(s.begin(), send(), s.begin(), std::toupper);
+}
+
+template <class CharType> inline void swapcase(basic_string<CharType> &s) {
+  std::transform(s.begin(), s.end(), s.begin(), [](CharType c) {
+    if (std::isupper(c)) {
+      return std::lower(c);
+    } else if (std::islower(c)) {
+      return std::upper(c);
+    } else {
+      return c;
+    }
+  });
 }
 
 }; // namespace pystr
