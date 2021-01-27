@@ -216,6 +216,58 @@ rpartition(const basic_string<CharType> &s,
   }
 }
 
+template <class CharType>
+inline tuple<basic_string<CharType>, basic_string<CharType>,
+             basic_string<CharType>>
+join(const vector<basic_string<CharType>> &strs,
+     const basic_string<CharType> &separator) {
+  basic_string<CharType>::size_type length = 0;
+  for (size_t i = 0; i < strs.size(); i++) {
+    if (i == 0) {
+      length = length + strs[i].size();
+    } else {
+      length = length + separator.size();
+      length = length + strs[i].size();
+    }
+  }
+  basic_string<CharType> result;
+  result.reserve(length);
+  for (size_t i = 0; i < strs.size(); i++) {
+    if (i == 0) {
+      result += strs[i];
+    } else {
+      result += separator;
+      result += strs[i];
+    }
+  }
+  return result;
+}
+
+template <class CharType>
+inline bool startswith(const basic_string<CharType> &s,
+                       const basic_string<CharType> &prefix,
+                       typename basic_string<CharType>::size_type start = 0,
+                       typename basic_string<CharType>::size_type end =
+                           basic_string<CharType>::npos) {
+  if (end == basic_string<CharType>::npos) {
+    if (prefix.size() + start > s.size()) {
+      return false;
+    }
+  } else {
+    if (prefix.size() + start > s.size() || prefix.size() < end) {
+      return false;
+    }
+  }
+  for (size_t i = 0; i < prefix.size(); i++) {
+    if (s[start + i] == prefix[i]) {
+      // pass
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
 }; // namespace pystr
 
 #endif // PY_STR_HPP

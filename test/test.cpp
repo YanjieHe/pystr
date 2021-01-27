@@ -75,8 +75,18 @@ TEST_CASE("partition", "[pystr::partition]") {
 }
 
 TEST_CASE("rpartition", "[pystr::rpartition]") {
-  pprint::PrettyPrinter printer;
-  printer.print(pystr::rpartition<char>("aaabbbcccbbbddd", "bbb"));
-  REQUIRE(pystr::partition<char>("aaabbbcccbbbddd", "bbb") ==
-          make_tuple("aaa", "bbb", "cccbbbddd"));
+  REQUIRE(pystr::rpartition<char>("aaabbbcccbbbddd", "bbb") ==
+          make_tuple("aaabbbccc", "bbb", "ddd"));
+}
+
+TEST_CASE("startswith", "[pystr::startswith]") {
+  REQUIRE(pystr::startswith<char>("", "") == true);
+  REQUIRE(pystr::startswith<char>("", "a") == false);
+  REQUIRE(pystr::startswith<char>("a", "") == true);
+  REQUIRE(pystr::startswith<char>("abc", "ab") == true);
+  REQUIRE(pystr::startswith<char>("abc", "abc") == true);
+  REQUIRE(pystr::startswith<char>("abc", "abcd") == false);
+  REQUIRE(pystr::startswith<char>("abcdef", "abc") == true);
+  REQUIRE(pystr::startswith<char>("abcdef", "abc", 1) == false);
+  REQUIRE(pystr::startswith<char>("abcdef", "bc", 1) == true);
 }
