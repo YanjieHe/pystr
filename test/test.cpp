@@ -90,3 +90,27 @@ TEST_CASE("startswith", "[pystr::startswith]") {
   REQUIRE(pystr::startswith<char>("abcdef", "abc", 1) == false);
   REQUIRE(pystr::startswith<char>("abcdef", "bc", 1) == true);
 }
+
+TEST_CASE("endswith", "[pystr::endswith]") {
+  REQUIRE(pystr::endswith<char>("", "") == true);
+  REQUIRE(pystr::endswith<char>("", "a") == false);
+  REQUIRE(pystr::endswith<char>("a", "") == true);
+  REQUIRE(pystr::endswith<char>("", ".mesh") == false);
+  REQUIRE(pystr::endswith<char>("help", ".mesh") == false);
+  REQUIRE(pystr::endswith<char>("help", ".mesh", 0) == false);
+  REQUIRE(pystr::endswith<char>("help", ".mesh", 1) == false);
+  REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 2) == false);
+  REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 1) == false);
+  //   REQUIRE(pystr::endswith<char>("help", ".mesh", 1, -1) == false);
+  //   REQUIRE(pystr::endswith<char>("help", ".mesh", -1) == false);
+  REQUIRE(pystr::endswith<char>(".mesh", ".mesh", 0, 5) == true);
+  REQUIRE(pystr::endswith<char>(".mesh", ".mesh") == true);
+  REQUIRE(pystr::endswith<char>("a.mesh", ".mesh") == true);
+  REQUIRE(pystr::endswith<char>("a.", ".") == true);
+  REQUIRE(pystr::endswith<char>("abcdef", "ef") == true);
+  REQUIRE(pystr::endswith<char>("abcdef", "cdef") == true);
+  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2) == true);
+  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 3) == false);
+  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2, 3) == false);
+  //   REQUIRE(pystr::endswith<char>("abcdef", "cdef", -10) == true);
+}

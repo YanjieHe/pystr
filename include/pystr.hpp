@@ -268,6 +268,44 @@ inline bool startswith(const basic_string<CharType> &s,
   return true;
 }
 
+template <class CharType>
+inline bool endswith(const basic_string<CharType> &s,
+                     const basic_string<CharType> &prefix,
+                     typename basic_string<CharType>::size_type start =
+                         basic_string<CharType>::npos,
+                     typename basic_string<CharType>::size_type end =
+                         basic_string<CharType>::npos) {
+  if (start == basic_string<CharType>::npos) {
+    if (end == basic_string<CharType>::npos) {
+      if (prefix.size() > s.size()) {
+        return false;
+      }
+    } else {
+      if (prefix.size() > std::min(s.size(), end)) {
+        return false;
+      }
+    }
+  } else {
+    if (end == basic_string<CharType>::npos) {
+      if (start + prefix.size() > s.size()) {
+        return false;
+      }
+    } else {
+      if (start + prefix.size() > std::min(s.size(), end)) {
+        return false;
+      }
+    }
+  }
+  for (size_t i = 0; i < prefix.size(); i++) {
+    if (s[s.size() - i] == prefix[prefix.size() - i]) {
+      // pass
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
 }; // namespace pystr
 
 #endif // PY_STR_HPP
