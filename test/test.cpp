@@ -8,109 +8,110 @@ using std::string;
 using std::make_tuple;
 
 TEST_CASE("split strings from left to right", "[pystr::split]") {
-  REQUIRE(pystr::split<char>("a, b, c", ", ") == vector<string>{"a", "b", "c"});
-  REQUIRE(pystr::split<char>("", "/", 1) == vector<string>{""});
-  REQUIRE(pystr::split<char>("/", "/", 1) == vector<string>{"", ""});
-  REQUIRE(pystr::split<char>(" ", " ", 1) == vector<string>{"", ""});
-  REQUIRE(pystr::split<char>(" /", "/", 1) == vector<string>{" ", ""});
-  REQUIRE(pystr::split<char>(" //", "/", 1) == vector<string>{" ", "/"});
-  REQUIRE(pystr::split<char>("a  ", " ", 1) == vector<string>{"a", " "});
-  REQUIRE(pystr::split<char>("//as//rew//gdf", "//") ==
-          vector<string>{"", "as", "rew", "gdf"});
-  REQUIRE(pystr::split<char>("/root/world", "/", 0) ==
-          vector<string>{"/root/world"});
-  REQUIRE(pystr::split<char>("/root/world", "/", 1) ==
-          vector<string>{"", "root/world"});
-  REQUIRE(pystr::split<char>("/root/world", "/", 2) ==
-          vector<string>{"", "root", "world"});
-  REQUIRE(pystr::split<char>("/root/world", "/", -1) ==
-          vector<string>{"", "root", "world"});
-  REQUIRE(pystr::split<char>("a\r\nb \n\n", "") == vector<string>{"a", "b"});
+    REQUIRE(pystr::split<char>("a, b, c", ", ") ==
+            vector<string>{"a", "b", "c"});
+    REQUIRE(pystr::split<char>("", "/", 1) == vector<string>{""});
+    REQUIRE(pystr::split<char>("/", "/", 1) == vector<string>{"", ""});
+    REQUIRE(pystr::split<char>(" ", " ", 1) == vector<string>{"", ""});
+    REQUIRE(pystr::split<char>(" /", "/", 1) == vector<string>{" ", ""});
+    REQUIRE(pystr::split<char>(" //", "/", 1) == vector<string>{" ", "/"});
+    REQUIRE(pystr::split<char>("a  ", " ", 1) == vector<string>{"a", " "});
+    REQUIRE(pystr::split<char>("//as//rew//gdf", "//") ==
+            vector<string>{"", "as", "rew", "gdf"});
+    REQUIRE(pystr::split<char>("/root/world", "/", 0) ==
+            vector<string>{"/root/world"});
+    REQUIRE(pystr::split<char>("/root/world", "/", 1) ==
+            vector<string>{"", "root/world"});
+    REQUIRE(pystr::split<char>("/root/world", "/", 2) ==
+            vector<string>{"", "root", "world"});
+    REQUIRE(pystr::split<char>("/root/world", "/", -1) ==
+            vector<string>{"", "root", "world"});
+    REQUIRE(pystr::split<char>("a\r\nb \n\n", "") == vector<string>{"a", "b"});
 }
 
 TEST_CASE("split strings from right to left", "[pystr::rsplit]") {
-  REQUIRE(pystr::rsplit<char>("", "/", 1) == vector<string>{""});
-  REQUIRE(pystr::rsplit<char>("", "", 1) == vector<string>{""});
-  REQUIRE(pystr::rsplit<char>(" ", "", 1) == vector<string>{});
-  REQUIRE(pystr::rsplit<char>("  ", "", 1) == vector<string>{});
-  REQUIRE(pystr::rsplit<char>("/", "/", 1) == vector<string>{"", ""});
-  REQUIRE(pystr::rsplit<char>(" /", "/", 1) == vector<string>{" ", ""});
-  REQUIRE(pystr::rsplit<char>(" //", "/", 1) == vector<string>{" /", ""});
-  REQUIRE(pystr::rsplit<char>("/root", "/", 1) == vector<string>{"", "root"});
-  REQUIRE(pystr::rsplit<char>("/root/world", "/", 0) ==
-          vector<string>{"/root/world"});
-  REQUIRE(pystr::rsplit<char>("/root/world", "/", 1) ==
-          vector<string>{"/root", "world"});
-  REQUIRE(pystr::rsplit<char>("/root/world", "/", 2) ==
-          vector<string>{"", "root", "world"});
-  REQUIRE(pystr::rsplit<char>("/root/world", "/", -1) ==
-          vector<string>{"", "root", "world"});
-  REQUIRE(pystr::rsplit<char>(" root world", "", 0) ==
-          vector<string>{" root world"});
-  REQUIRE(pystr::rsplit<char>(" root world", "", 2) ==
-          vector<string>{"root", "world"});
-  REQUIRE(pystr::rsplit<char>(" root world", " ", 0) ==
-          vector<string>{" root world"});
-  REQUIRE(pystr::rsplit<char>(" root world", " ", 0) ==
-          vector<string>{" root world"});
-  REQUIRE(pystr::rsplit<char>(" root world", " ", 1) ==
-          vector<string>{" root", "world"});
-  REQUIRE(pystr::rsplit<char>(" root world", " ", 2) ==
-          vector<string>{"", "root", "world"});
+    REQUIRE(pystr::rsplit<char>("", "/", 1) == vector<string>{""});
+    REQUIRE(pystr::rsplit<char>("", "", 1) == vector<string>{""});
+    REQUIRE(pystr::rsplit<char>(" ", "", 1) == vector<string>{});
+    REQUIRE(pystr::rsplit<char>("  ", "", 1) == vector<string>{});
+    REQUIRE(pystr::rsplit<char>("/", "/", 1) == vector<string>{"", ""});
+    REQUIRE(pystr::rsplit<char>(" /", "/", 1) == vector<string>{" ", ""});
+    REQUIRE(pystr::rsplit<char>(" //", "/", 1) == vector<string>{" /", ""});
+    REQUIRE(pystr::rsplit<char>("/root", "/", 1) == vector<string>{"", "root"});
+    REQUIRE(pystr::rsplit<char>("/root/world", "/", 0) ==
+            vector<string>{"/root/world"});
+    REQUIRE(pystr::rsplit<char>("/root/world", "/", 1) ==
+            vector<string>{"/root", "world"});
+    REQUIRE(pystr::rsplit<char>("/root/world", "/", 2) ==
+            vector<string>{"", "root", "world"});
+    REQUIRE(pystr::rsplit<char>("/root/world", "/", -1) ==
+            vector<string>{"", "root", "world"});
+    REQUIRE(pystr::rsplit<char>(" root world", "", 0) ==
+            vector<string>{" root world"});
+    REQUIRE(pystr::rsplit<char>(" root world", "", 2) ==
+            vector<string>{"root", "world"});
+    REQUIRE(pystr::rsplit<char>(" root world", " ", 0) ==
+            vector<string>{" root world"});
+    REQUIRE(pystr::rsplit<char>(" root world", " ", 0) ==
+            vector<string>{" root world"});
+    REQUIRE(pystr::rsplit<char>(" root world", " ", 1) ==
+            vector<string>{" root", "world"});
+    REQUIRE(pystr::rsplit<char>(" root world", " ", 2) ==
+            vector<string>{"", "root", "world"});
 }
 
 TEST_CASE("strip", "[pystr::strip]") {
-  REQUIRE(pystr::strip<char>("") == "");
-  REQUIRE(pystr::strip<char>("a") == "a");
-  REQUIRE(pystr::strip<char>("a ") == "a");
-  REQUIRE(pystr::strip<char>(" a") == "a");
-  REQUIRE(pystr::strip<char>("\n a ") == "a");
-  REQUIRE(pystr::strip<char>("\r\n a \r\n") == "a");
-  REQUIRE(pystr::strip<char>("\r\n a \r\n\t") == "a");
+    REQUIRE(pystr::strip<char>("") == "");
+    REQUIRE(pystr::strip<char>("a") == "a");
+    REQUIRE(pystr::strip<char>("a ") == "a");
+    REQUIRE(pystr::strip<char>(" a") == "a");
+    REQUIRE(pystr::strip<char>("\n a ") == "a");
+    REQUIRE(pystr::strip<char>("\r\n a \r\n") == "a");
+    REQUIRE(pystr::strip<char>("\r\n a \r\n\t") == "a");
 }
 
 TEST_CASE("partition", "[pystr::partition]") {
-  REQUIRE(pystr::partition<char>("aaabbbcccbbbddd", "bbb") ==
-          make_tuple("aaa", "bbb", "cccbbbddd"));
+    REQUIRE(pystr::partition<char>("aaabbbcccbbbddd", "bbb") ==
+            make_tuple("aaa", "bbb", "cccbbbddd"));
 }
 
 TEST_CASE("rpartition", "[pystr::rpartition]") {
-  REQUIRE(pystr::rpartition<char>("aaabbbcccbbbddd", "bbb") ==
-          make_tuple("aaabbbccc", "bbb", "ddd"));
+    REQUIRE(pystr::rpartition<char>("aaabbbcccbbbddd", "bbb") ==
+            make_tuple("aaabbbccc", "bbb", "ddd"));
 }
 
 TEST_CASE("startswith", "[pystr::startswith]") {
-  REQUIRE(pystr::startswith<char>("", "") == true);
-  REQUIRE(pystr::startswith<char>("", "a") == false);
-  REQUIRE(pystr::startswith<char>("a", "") == true);
-  REQUIRE(pystr::startswith<char>("abc", "ab") == true);
-  REQUIRE(pystr::startswith<char>("abc", "abc") == true);
-  REQUIRE(pystr::startswith<char>("abc", "abcd") == false);
-  REQUIRE(pystr::startswith<char>("abcdef", "abc") == true);
-  REQUIRE(pystr::startswith<char>("abcdef", "abc", 1) == false);
-  REQUIRE(pystr::startswith<char>("abcdef", "bc", 1) == true);
+    REQUIRE(pystr::startswith<char>("", "") == true);
+    REQUIRE(pystr::startswith<char>("", "a") == false);
+    REQUIRE(pystr::startswith<char>("a", "") == true);
+    REQUIRE(pystr::startswith<char>("abc", "ab") == true);
+    REQUIRE(pystr::startswith<char>("abc", "abc") == true);
+    REQUIRE(pystr::startswith<char>("abc", "abcd") == false);
+    REQUIRE(pystr::startswith<char>("abcdef", "abc") == true);
+    REQUIRE(pystr::startswith<char>("abcdef", "abc", 1) == false);
+    REQUIRE(pystr::startswith<char>("abcdef", "bc", 1) == true);
 }
 
 TEST_CASE("endswith", "[pystr::endswith]") {
-  REQUIRE(pystr::endswith<char>("", "") == true);
-  REQUIRE(pystr::endswith<char>("", "a") == false);
-  REQUIRE(pystr::endswith<char>("a", "") == true);
-  REQUIRE(pystr::endswith<char>("", ".mesh") == false);
-  REQUIRE(pystr::endswith<char>("help", ".mesh") == false);
-  REQUIRE(pystr::endswith<char>("help", ".mesh", 0) == false);
-  REQUIRE(pystr::endswith<char>("help", ".mesh", 1) == false);
-  REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 2) == false);
-  REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 1) == false);
-  //   REQUIRE(pystr::endswith<char>("help", ".mesh", 1, -1) == false);
-  //   REQUIRE(pystr::endswith<char>("help", ".mesh", -1) == false);
-  REQUIRE(pystr::endswith<char>(".mesh", ".mesh", 0, 5) == true);
-  REQUIRE(pystr::endswith<char>(".mesh", ".mesh") == true);
-  REQUIRE(pystr::endswith<char>("a.mesh", ".mesh") == true);
-  REQUIRE(pystr::endswith<char>("a.", ".") == true);
-  REQUIRE(pystr::endswith<char>("abcdef", "ef") == true);
-  REQUIRE(pystr::endswith<char>("abcdef", "cdef") == true);
-  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2) == true);
-  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 3) == false);
-  REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2, 3) == false);
-  //   REQUIRE(pystr::endswith<char>("abcdef", "cdef", -10) == true);
+    REQUIRE(pystr::endswith<char>("", "") == true);
+    REQUIRE(pystr::endswith<char>("", "a") == false);
+    REQUIRE(pystr::endswith<char>("a", "") == true);
+    REQUIRE(pystr::endswith<char>("", ".mesh") == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh") == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", 0) == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", 1) == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 2) == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", 1, 1) == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", 1, -1) == false);
+    REQUIRE(pystr::endswith<char>("help", ".mesh", -1) == false);
+    REQUIRE(pystr::endswith<char>(".mesh", ".mesh", 0, 5) == true);
+    REQUIRE(pystr::endswith<char>(".mesh", ".mesh") == true);
+    REQUIRE(pystr::endswith<char>("a.mesh", ".mesh") == true);
+    REQUIRE(pystr::endswith<char>("a.", ".") == true);
+    REQUIRE(pystr::endswith<char>("abcdef", "ef") == true);
+    REQUIRE(pystr::endswith<char>("abcdef", "cdef") == true);
+    REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2) == true);
+    REQUIRE(pystr::endswith<char>("abcdef", "cdef", 3) == false);
+    REQUIRE(pystr::endswith<char>("abcdef", "cdef", 2, 3) == false);
+    REQUIRE(pystr::endswith<char>("abcdef", "cdef", -10) == true);
 }
