@@ -1,1 +1,49 @@
 # pystr
+
+## Road Map
+
+- [ ] capitalize
+- [ ] casefold
+- [ ] center
+- [ ] count
+- [ ] encode
+- [x] endswith
+- [ ] expandtabs
+- [ ] find
+- [ ] format
+- [ ] format_map
+- [ ] index
+- [x] isalnum
+- [x] isalpha
+- [ ] isascii
+- [ ] isdecimal
+- [x] isdigit
+- [ ] isidentifier
+- [x] islower
+- [ ] isnumeric
+- [ ] isprintable
+- [x] isspace
+- [ ] istitle
+- [x] isupper
+- [x] join
+- [ ] ljust
+- [ ] lower
+- [ ] lstrip
+- [ ] maketrans
+- [x] partition
+- [ ] replace
+- [ ] rfind
+- [ ] rindex
+- [ ] rjust
+- [x] rpartition
+- [x] rsplit
+- [x] rstrip
+- [x] split
+- [ ] splitlines
+- [x] startswith
+- [x] strip
+- [x] swapcase
+- [ ] title
+- [ ] translate
+- [x] upper
+- [ ] zfill
