@@ -2,7 +2,7 @@
 
 ## Road Map
 
-- [ ] capitalize
+- [x] capitalize
 - [ ] casefold
 - [ ] center
 - [ ] count
@@ -27,8 +27,8 @@
 - [x] isupper
 - [x] join
 - [ ] ljust
-- [ ] lower
-- [ ] lstrip
+- [x] lower
+- [x] lstrip
 - [ ] maketrans
 - [x] partition
 - [ ] replace
