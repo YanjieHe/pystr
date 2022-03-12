@@ -309,8 +309,7 @@ namespace pystr
     }
 
     template <class StringType>
-    inline tuple<StringType, StringType,
-                 StringType>
+    inline tuple<StringType, StringType, StringType>
     rpartition(const StringType &s,
                const StringType &separator)
     {
